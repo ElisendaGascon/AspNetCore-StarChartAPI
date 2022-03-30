@@ -65,5 +65,22 @@ namespace StarChart.Controllers
             _context.SaveChanges();
             return CreatedAtRoute("GetById", new { id = celestialObject.Id }, celestialObject);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, CelestialObject celestialObject)
+        {
+            var result = _context.CelestialObjects.Find(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            result.Name = celestialObject.Name;
+            result.OrbitalPeriod = celestialObject.OrbitalPeriod;
+            _context.CelestialObjects.Update(result);
+            _context.SaveChanges();
+            return NoContent();
+        }
     }
 }
